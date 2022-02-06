@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Ofur Maríus</title>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+    attribute vec4 vPosition;
+
+    uniform vec2 pos;
+    uniform float dir;
+
+    void main()
+    {
+        gl_Position = vPosition;
+        gl_Position.x = dir * vPosition.x + pos.x;
+        gl_Position.y = vPosition.y + pos.y;
+    }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+
+    uniform vec4 color;
+
+    void main()
+    {
+        gl_FragColor = color;
+    }
+    </script>
+
+    <script type="text/javascript" src="../../Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../../Common/initShaders.js"></script>
+    <script type="text/javascript" src="../../Common/MV.js"></script>
+    <script type="text/javascript" src="v1.js"></script>
+  </head>
+
+  <body>
+    <canvas id="gl-canvas" width="800" height="800">
+      Oops... your browser doesn't support the HTML5 canvas element
+    </canvas>
+  </body>
+</html>
+

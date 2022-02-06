@@ -70,7 +70,7 @@ function updateMarius(dt) {
         marius.vel[1] -= g * dt;
     if (held.jump && !marius.airbourne)
         marius.vel[1] = 5;
-    if (!held.jump && marius.vel[1] >= 1)
+    if (!held.jump && marius.vel[1] >= 0)
         marius.vel[1] /= 2;
 
     marius.pos[0] += marius.vel[0] * dt;

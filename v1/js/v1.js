@@ -149,17 +149,17 @@ function createEnemy() {
     const scale = minScale + (maxScale - minScale)*Math.random();
     const xvel = minVel + (maxVel - minVel)*Math.random();
     const side = Math.floor(2*Math.random());
-    const xPos = side === 0 ? -1 : 0.92;
+    const xPos = side === 0 ? -1 : 1 - scale*0.08;
 
     return {
         points: [
-            vec2(-0.03, 0   ),
-            vec2( 0,    0.08),
-            vec2( 0.03, 0   )
+            vec2(-scale*0.03, 0),
+            vec2(0, scale*0.08),
+            vec2(scale*0.03, 0)
         ],
         color: colors.purple,
-        width:  0.06,
-        height: 0.08,
+        width:  scale*0.06,
+        height: scale*0.08,
         pos: vec2(xPos, groundY),
         vel: vec2((1-2*side)*xvel, 0),
         airbourne: false

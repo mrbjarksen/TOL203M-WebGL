@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Sólkerfi</title>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+    attribute vec4 coordinates;
+    attribute vec4 color;
+    varying   vec4 fColor;
+
+    uniform mat4 sceneRotation;
+    uniform mat4 translation;
+    uniform mat4 rotation;
+    uniform mat4 scaling;
+
+    void main()
+    {
+        fColor = color;
+        gl_Position = sceneRotation * translation * rotation * scaling * coordinates;
+    }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec4 fColor;
+
+    void main()
+    {
+        gl_FragColor = fColor;
+    }
+    </script>
+
+    <script type="text/javascript" src="../../Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../../Common/initShaders.js"></script>
+    <script type="text/javascript" src="../../Common/MV.js"></script>
+    <script type="text/javascript" src="h4d5.js"></script>
+  </head>
+
+  <body>
+    <canvas id="gl-canvas" width="512" height="512">
+      Oops... your browser doesn't support the HTML5 canvas element
+    </canvas>
+  </body>
+</html>
+

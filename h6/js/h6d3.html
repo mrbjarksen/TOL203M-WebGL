@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Phong Cube</title>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+    attribute vec4 coordinates;
+    attribute vec4 normal;
+
+    varying vec3 n, v;
+
+    uniform vec3 viewer;
+    uniform mat4 projection;
+    uniform mat4 modelView;
+    uniform mat4 rotation;
+
+    void main()
+    {
+        vec3 pos = coordinates.xyz;
+        n = normalize(normal.xyz);
+        v = normalize(viewer);
+
+        gl_Position = projection * modelView * rotation * coordinates;
+    }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec3 n, v;
+
+    struct Light {
+        vec3 direction;
+        vec4 ambient;
+        vec4 diffuse;
+        vec4 specular;
+    };
+
+    struct Material {
+        vec4 ambient;
+        vec4 diffuse;
+        vec4 specular;
+        float shininess;
+    };
+    
+    uniform Light light;
+    uniform Material material;
+
+    void main()
+    {
+        vec3 l = -normalize(light.direction);
+        vec3 r = 2.0 * dot(l, n) * n - l;
+
+        vec4 amb  = light.ambient  * material.ambient;
+        vec4 diff = light.diffuse  * material.diffuse;
+        vec4 spec = light.specular * material.specular;
+
+        vec4 Id = diff * max(dot(l, n), 0.0);
+        vec4 Is = spec * pow(max(dot(r, v), 0.0), material.shininess);
+
+        gl_FragColor = amb + Id + Is;
+        //gl_FragColor = vec4(1, 1, 1, 1);
+    }
+    </script>
+
+    <script type="text/javascript" src="../../Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../../Common/initShaders.js"></script>
+    <script type="text/javascript" src="../../Common/MV.js"></script>
+    <script type="text/javascript" src="h6d3.js"></script>
+  </head>
+
+  <body>
+    <canvas id="gl-canvas" width="512" height="512">
+      Oops... your browser doesn't support the HTML5 canvas element
+    </canvas>
+  </body>
+</html>
+
